@@ -1,0 +1,181 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="cache-control" content="no-siteapp">
+<link rel="shortcut icon" href="https://cdnx.banma.ac.cn/wp-content/uploads/2020/02/e2c0bc5666c2480.png">
+<title>免服务器用heroku+OneDrive搭建OneManager网盘</title>
+
+<link rel='dns-prefetch' href='//zz.bdstatic.com' />
+<link rel='dns-prefetch' href='//banma.ac.cn' />
+<link rel='dns-prefetch' href='//apps.bdimg.com' />
+<link rel='stylesheet' id='main-css'  href='https://banma.ac.cn/wp-content/themes/rizhuti/style.css?ver=2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='fancybox-css'  href='https://banma.ac.cn/wp-content/themes/rizhuti/css/jquery.fancybox.min.css?ver=2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='wppay-css'  href='https://banma.ac.cn/wp-content/themes/rizhuti/shop/static/css/pay.css?ver=4.0.0' type='text/css' media='all' />
+<script type='text/javascript' src='https://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js?ver=2.5'></script>
+<script type='text/javascript' src='https://banma.ac.cn/wp-content/themes/rizhuti/js/theia-sticky-sidebar.min.js?ver=2.5'></script>
+<meta name='description' content='示例站点http://https://syyhub.herokuapp.com// 需要的准备 heroku官方：heroku.com OneManager的：github仓库地址 教程开始 1.通过heroku官网注册账户并登陆（验证码需过墙才能显示） 2.点击OneManager的：github仓库地址进入后下拉找到部署到heroku然后单击按钮 3.点击后跳转到创建新应用（Create New App）页面输入应用名称（App name）以及选择地区（Choose a region）。名称随便输入（生成后分配的二级域名就是你的应用名称）地区可选美国或者欧洲。 4.等待部署完成后进入管理应用程序 5.点击开启应用程式会打开你程序的网址，比如我在创建应用的是名称是odjc我的网站就是odjc.herokuapp.com。注意记录你的网站。 6.打开你的应用程序网站后开始程序安装 7.选择中文后点击新建ApiKey进入新打开页面后复制API密钥返回安装页面填入。Set admin password为设置你网盘程序后台的密码。 8.完成安装后进入网盘界面，点击登录并输入上一步自己设置的密码。登录后点击管理—设置进入设置页面。 9.设置页面可以设置各项设置，点击最下方进入添加Onedrive盘 10.此程序可添加多盘，标签以及显示名称可用于区分。Onedrive_Ver选择默认即可，世纪互联版选择第二项，如果是开发者E5想调用APi可以用第三种自己申请应用ID与机密可调用OnedriveApi。 11.添加后进入网盘程序首页，如需添加其他网盘再次进入设置添加。 关于绑定自己域名的教程 1.在heroku后台找到创建的app 2.点击设定值（Settings）下拉找到新增网域（Add domain） 3.输入域名 4.输入域名下一步后如果出现下图提提示点击第二个链接 5.进入新页面后会要求绑定一张卡，经测试信用卡，中行跨境通，虚拟卡都可以。不用收费功能不会扣款，建议使用跨境通或者虚拟卡（添加后除了可以自定义域名外免费的使用量由550免费动态增加至1000免费动态） 6.完成卡验证后返回第3步添加域名后得到CNAME的解析目标。去你域名添加得到的CNAME解析后域名就添加好了' />
+<meta name="keywords" content="教程资源, 网盘相关">
+<meta name="description" content="示例站点http://idev.red/ 需要的准备 heroku官方：heroku.com OneManager的：github仓库地址  教程开始 1.通过heroku官网注册账户并登陆（验证码需过墙才能显示）  2.点击OneManager的：github仓库地址进入后下拉找到部署到heroku然后单击按钮    3.点击后跳转到创建新应用（Create New App）页面输入应用名称（A">
+<link rel="icon" href="https://banma.ac.cn/wp-content/uploads/2020/02/e2c0bc5666c2480.png" sizes="32x32" />
+<link rel="icon" href="https://banma.ac.cn/wp-content/uploads/2020/02/e2c0bc5666c2480.png" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://banma.ac.cn/wp-content/uploads/2020/02/e2c0bc5666c2480.png" />
+<meta name="msapplication-TileImage" content="https://banma.ac.cn/wp-content/uploads/2020/02/e2c0bc5666c2480.png" />
+<!--[if lt IE 9]><script src="https://banma.ac.cn/wp-content/themes/rizhuti/js/html5.js"></script><![endif]-->
+</head>
+<body class="post-template-default single single-post postid-65 single-format-standard comment-open list-news">
+
+<header class="header">
+	<div class="container_header">
+		<h1 class="logo"><a href="https://banma.ac.cn/" rel="home"><img src="https://cdnx.banma.ac.cn/wp-content/uploads/2020/02/120628f7a2966a4.png"></a></h1>
+		
+					<div class="wel">
+					<div class="wel-item">
+					</div>
+					
+				<div class="wel-item"><a href="https://banma.ac.cn/login" etap="login_btn">登录</a></div>
+				<div class="wel-item wel-item-btn"><a href="https://banma.ac.cn/login?action=register" etap="register_btn">注册新用户</a></div>
+				<div class="wel-item"><a href="javascript:;" id="search"><i class="iconfont">&#xe67a;</i></a></div>
+			</div>
+
+			<div class="m-wel">
+				<div class="m-wel-login">
+					<img class="avatar" src="https://banma.ac.cn/wp-content/themes/rizhuti/img/avatar.png">
+					<a class="m-wel-login" href="https://banma.ac.cn/login">登录</a>
+					<a class="m-wel-register" href="https://banma.ac.cn/login?action=register">新用户注册</a>
+				</div>
+			</div>
+		
+		<div class="site-navbar">
+			<ul id="menu-%e4%b8%bb%e9%a1%b5" class="menu"><li><a href="https://banma.ac.cn">首页</a></li>
+<li class="menu-item-has-children"><a href="https://banma.ac.cn/wenzhaong">文章分类</a>
+<div class="sub-menu"><ul>
+	<li><a href="https://banma.ac.cn/jc">教程资源</a></li>
+	<li><a href="https://banma.ac.cn/wl">网络资源</a></li>
+	<li><a href="https://banma.ac.cn/jc/wd">网盘相关</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://sd.banma.ac.cn">斑马小店</a></li>
+<li><a target="_blank" rel="noopener noreferrer" href="https://banmavps.com">斑马云服</a></li>
+<li><a href="https://yun.banma.ac.cn">斑马图床</a></li>
+<li><a href="https://banma.ac.cn/%e5%85%b3%e4%ba%8e">关于</a></li>
+</ul>		</div>
+
+		<div class="m-navbar-start"><i class="iconfont">&#xe648;</i></div>
+		<div class="m-wel-start"><i class="iconfont">&#xe66b;</i></div>
+		<div class="m-mask"></div>
+	</div>
+	<div id="header-search-dropdown" class="header-search-dropdown ajax-search is-in-navbar js-ajax-search">
+		<div class="container container--narrow">
+			<form class="search-form search-form--horizontal" method="get" action="https://banma.ac.cn/">
+				<div class="search-form__input-wrap">
+					<input type="text" name="s" class="search-form__input" placeholder="输入关键词进行搜索..." value="">
+				</div>
+				<div class="search-form__submit-wrap">
+					<button type="submit" class="search-form__submit btn btn-primary">搜索一下</button>
+				</div>
+			</form>
+			<div class="search-results">
+				<div class="typing-loader"></div>
+				<div class="search-results__inner"></div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<section class="article-focusbox bgimg-fixed" id="focsbox-true" style="background-image: url(https://cdnx.banma.ac.cn/wp-content/uploads/2020/02/ea271107cb9a6ac.png)" >
+    <header class="article-header">
+        <h1 class="article-title">免服务器用heroku+OneDrive搭建OneManager网盘</h1>
+        <div class="article-meta">
+            <span class="item item-1">2020年2月21日 pm9:58</span>
+            <span class="item item-2">作者：banmaac</span>
+            <span class="item item-3">分类：<a href="https://banma.ac.cn/jc" rel="category tag">教程资源</a> / <a href="https://banma.ac.cn/jc/wd" rel="category tag">网盘相关</a></span>
+            <span class="item item-4"><i class="iconfont">&#xe611;</i> 1.35K</span>
+            <span class="item item-5"></span>
+        </div>
+    </header>
+</section>
+
+<section class="container">
+    <div class="content-wrap">
+    	<div class="content">
+    		
+            
+    		<article class="article-content">
+    			<h2>示例站点<a href="http://idev.red/" target="_blank" rel="noopener noreferrer">http://idev.red/</a></h2>
+<h2>需要的准备</h2>
+<p>heroku官方：<a href="https://heroku.com/" target="_blank" rel="noopener noreferrer">heroku.com</a></p>
+<p class="public d-flex flex-wrap flex-items-center break-word float-none ">OneManager的：<a href="https://github.com/qkqpttgf/OneManager-php" target="_blank" rel="noopener noreferrer">github仓库地址</a></p>
+<h2>教程开始</h2>
+<p>1.通过heroku官网注册账户并登陆（验证码需过墙才能显示）<img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/p4W2QW0tbf/%E6%8D%95%E8%8E%B7.JPG" width="863" height="932" /></p>
+<p>2.点击OneManager的：<a href="https://github.com/qkqpttgf/OneManager-php" target="_blank" rel="noopener noreferrer">github仓库地址</a>进入后下拉找到部署到heroku然后单击按钮</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/znzxxdafis/%E6%8D%95%E8%8E%B71.JPG" width="1036" height="229" /></p>
+<p>3.点击后跳转到创建新应用（Create New App）页面输入应用名称（App name）以及选择地区（Choose a region）。名称随便输入（生成后分配的二级域名就是你的应用名称）地区可选美国或者欧洲。</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/JzjL3c9JST/QQ%E6%88%AA%E5%9B%BE20200221213128.png" width="798" height="464" /></p>
+<p>4.等待部署完成后进入管理应用程序</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/JeQWAvjrrz/%E6%8D%95%E8%8E%B72.JPG" width="744" height="760" /></p>
+<p>5.点击开启应用程式会打开你程序的网址，比如我在创建应用的是名称是odjc我的网站就是odjc.herokuapp.com。注意记录你的网站。</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/IuRP6HRnzg/%E6%8D%95%E8%8E%B73.JPG" width="1278" height="559" /></p>
+<p>6.打开你的应用程序网站后开始程序安装</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/h4HU4rFrIp/%E6%8D%95%E8%8E%B74.JPG" width="811" height="278" /></p>
+<p>7.选择中文后点击新建ApiKey进入新打开页面后复制API密钥返回安装页面填入。Set admin password为设置你网盘程序后台的密码。</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/18UbAZKyRs/%E6%8D%95%E8%8E%B75.JPG" width="733" height="261" /></p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/3YXCTjf8mY/%E6%8D%95%E8%8E%B76.JPG" width="1361" height="379" /></p>
+<p>8.完成安装后进入网盘界面，点击登录并输入上一步自己设置的密码。登录后点击管理—设置进入设置页面。</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/qXo9dnHfDC/%E6%8D%95%E8%8E%B77.JPG" width="1066" height="215" /></p>
+<p>9.设置页面可以设置各项设置，点击最下方进入<a href="https://odjc.herokuapp.com/?AddDisk">添加Onedrive盘</a></p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/gxriBH7GiP/%E6%8D%95%E8%8E%B78.JPG" width="775" height="385" /></p>
+<p>10.此程序可添加多盘，标签以及显示名称可用于区分。Onedrive_Ver选择默认即可，世纪互联版选择第二项，如果是开发者E5想调用APi可以用第三种自己申请应用ID与机密可调用OnedriveApi。</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/21/Seb9la7mTV/%E6%8D%95%E8%8E%B79.JPG" width="599" height="316" /></p>
+<p>11.添加后进入网盘程序首页，如需添加其他网盘再次进入设置添加。</p>
+<hr />
+<h2>关于绑定自己域名的教程</h2>
+<p>1.在heroku后台找到创建的app</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/22/zsSyq0HDP9/%E6%8D%95%E8%8E%B712.JPG" width="1426" height="316" /></p>
+<p>2.点击设定值（<span class="sub-nav-item-name gray">Settings）下拉找到新增网域（Add domain）</span></p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/22/B7aJQhl14A/%E6%8D%95%E8%8E%B710.JPG" width="985" height="443" /></p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/22/gsSNS9LjfI/%E6%8D%95%E8%8E%B711.JPG" width="1259" height="273" /></p>
+<p>3.输入域名</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/22/FRirDxXStz/%E6%8D%95%E8%8E%B713.JPG" width="611" height="299" /></p>
+<p>4.输入域名下一步后如果出现下图提提示点击第二个链接</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/22/waXonzNB29/%E6%8D%95%E8%8E%B714.JPG" width="489" height="175" /></p>
+<p>5.进入新页面后会要求绑定一张卡，经测试信用卡，中行跨境通，虚拟卡都可以。不用收费功能不会扣款，建议使用跨境通或者虚拟卡（添加后除了可以自定义域名外免费的使用量由550免费动态增加至1000免费动态）</p>
+<p><img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/22/XGWY22uI8E/%E6%8D%95%E8%8E%B715.JPG" width="675" height="787" /></p>
+<p>6.完成卡验证后返回第3步添加域名后得到CNAME的解析目标。去你域名添加得到的CNAME解析后域名就添加好了<img class="alignnone size-medium" src="https://yun.banma.ac.cn/images/2020/02/22/0rJuU3VTSy/%E6%8D%95%E8%8E%B716.JPG" width="452" height="329" /></p>
+
+                
+                
+                                
+                                                                    
+                    
+
+ 
+<script type='text/javascript' src='https://zz.bdstatic.com/linksubmit/push.js?ver=5.3.2'></script>
+<script type='text/javascript' src='https://banma.ac.cn/wp-content/themes/rizhuti/js/popup.min.js?ver=2.5'></script>
+<script type='text/javascript' src='https://banma.ac.cn/wp-content/themes/rizhuti/js/jquery.fancybox.min.js?ver=2.5'></script>
+<script type='text/javascript' src='https://banma.ac.cn/wp-content/themes/rizhuti/js/main.js?ver=2.5'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wppay_ajax_url = "https:\/\/banma.ac.cn\/wp-admin\/admin-ajax.php";
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://banma.ac.cn/wp-content/themes/rizhuti/shop/static/js/qy-pay.js?ver=5.3.2'></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?88d693ae35cf6f1b2ba7e0edcee09418";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+
+</body>
+</html>

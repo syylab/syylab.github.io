@@ -10,9 +10,6 @@
 <meta http-equiv="cache-control" content="no-siteapp">
 <title>免服务器用heroku+OneDrive搭建OneManager网盘</title>
 
-<link rel='stylesheet' id='main-css'  href='https://banma.ac.cn/wp-content/themes/rizhuti/style.css?ver=2.5' type='text/css' media='all' />
-<link rel='stylesheet' id='fancybox-css'  href='https://banma.ac.cn/wp-content/themes/rizhuti/css/jquery.fancybox.min.css?ver=2.5' type='text/css' media='all' />
-<link rel='stylesheet' id='wppay-css'  href='https://banma.ac.cn/wp-content/themes/rizhuti/shop/static/css/pay.css?ver=4.0.0' type='text/css' media='all' />
 <script type='text/javascript' src='https://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js?ver=2.5'></script>
 <script type='text/javascript' src='https://banma.ac.cn/wp-content/themes/rizhuti/js/theia-sticky-sidebar.min.js?ver=2.5'></script>
 <meta name='description' content='示例站点http://https://syyhub.herokuapp.com// 需要的准备 heroku官方：heroku.com OneManager的：github仓库地址 教程开始 1.通过heroku官网注册账户并登陆（验证码需过墙才能显示） 2.点击OneManager的：github仓库地址进入后下拉找到部署到heroku然后单击按钮 3.点击后跳转到创建新应用（Create New App）页面输入应用名称（App name）以及选择地区（Choose a region）。名称随便输入（生成后分配的二级域名就是你的应用名称）地区可选美国或者欧洲。 4.等待部署完成后进入管理应用程序 5.点击开启应用程式会打开你程序的网址，比如我在创建应用的是名称是odjc我的网站就是odjc.herokuapp.com。注意记录你的网站。 6.打开你的应用程序网站后开始程序安装 7.选择中文后点击新建ApiKey进入新打开页面后复制API密钥返回安装页面填入。Set admin password为设置你网盘程序后台的密码。 8.完成安装后进入网盘界面，点击登录并输入上一步自己设置的密码。登录后点击管理—设置进入设置页面。 9.设置页面可以设置各项设置，点击最下方进入添加Onedrive盘 10.此程序可添加多盘，标签以及显示名称可用于区分。Onedrive_Ver选择默认即可，世纪互联版选择第二项，如果是开发者E5想调用APi可以用第三种自己申请应用ID与机密可调用OnedriveApi。 11.添加后进入网盘程序首页，如需添加其他网盘再次进入设置添加。 关于绑定自己域名的教程 1.在heroku后台找到创建的app 2.点击设定值（Settings）下拉找到新增网域（Add domain） 3.输入域名 4.输入域名下一步后如果出现下图提提示点击第二个链接 5.进入新页面后会要求绑定一张卡，经测试信用卡，中行跨境通，虚拟卡都可以。不用收费功能不会扣款，建议使用跨境通或者虚拟卡（添加后除了可以自定义域名外免费的使用量由550免费动态增加至1000免费动态） 6.完成卡验证后返回第3步添加域名后得到CNAME的解析目标。去你域名添加得到的CNAME解析后域名就添加好了' />
